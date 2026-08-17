@@ -1,0 +1,41 @@
+<div class="controls">
+  <mat-form-field appearance="outline" class="control">
+    <mat-label>Active Integrations</mat-label>
+    <mat-select value="airtable" disabled>
+      <mat-option value="airtable">Airtable</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="control">
+    <mat-label>Entity</mat-label>
+    <mat-select [value]="selectedEntity()" (selectionChange)="onEntityChange($event.value)">
+      @for (entity of entities(); track entity.id) {
+        <mat-option [value]="entity.id">{{ entity.label }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="control search">
+    <mat-label>Search</mat-label>
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchChange($event)"
+      placeholder="Search all columns…"
+    />
+  </mat-form-field>
+</div>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+}
+
+<ag-grid-angular
+  class="ag-theme-quartz grid"
+  [columnDefs]="columnDefs()"
+  [rowData]="rowData()"
+  [defaultColDef]="defaultColDef"
+  [pagination]="true"
+  [paginationPageSize]="50"
+  (gridReady)="onGridReady($event)"
+/>

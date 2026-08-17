@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+}
+
+.hint {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+}
+
+.error-line {
+  color: #b3261e;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}

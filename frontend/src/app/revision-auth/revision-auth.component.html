@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Revision History Login</mat-card-title>
+    <mat-card-subtitle>
+      Browser-session login (email/password + MFA) - Required to sync Airtable's internal revision-history.
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (stage() === 'authenticated') {
+      <div class="status-row">
+        <mat-icon color="primary">check_circle</mat-icon>
+        <span>Session active</span>
+      </div>
+      <p class="hint"> Clears the saved login. You'll need to log in again to sync </p>
+    } @else if (stage() === 'idle') {
+      <p class="hint">Log in to enable revision-history sync</p>
+    } @else if (stage() === 'awaiting-mfa') {
+      <p class="hint">Enter the MFA code sent to your device.</p>
+      <mat-form-field appearance="outline">
+        <mat-label>MFA code</mat-label>
+        <input matInput inputmode="numeric" [(ngModel)]="mfaCode" placeholder="123456" />
+      </mat-form-field>
+    }
+
+    @if (error()) {
+      <p class="error-line">
+        <mat-icon color="warn">error</mat-icon>
+        <span>{{ error() }}</span>
+      </p>
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+    @if (stage() === 'authenticated') {
+      <button mat-stroked-button color="warn" (click)="forgetSession()" [disabled]="busy()">
+        <mat-icon>logout</mat-icon>
+        Forget Session
+      </button>
+    } @else if (stage() === 'idle') {
+      <button mat-raised-button color="primary" (click)="authenticate()" [disabled]="busy()">
+        <mat-icon>login</mat-icon>
+        Log In
+      </button>
+    } @else if (stage() === 'awaiting-mfa') {
+      <button mat-raised-button color="primary" (click)="submitMfa()" [disabled]="busy() || !mfaCode">
+        Submit Code
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

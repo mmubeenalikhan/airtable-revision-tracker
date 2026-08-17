@@ -1,0 +1,58 @@
+<main class="page">
+  <mat-toolbar color="primary" class="app-toolbar">
+    <mat-icon aria-hidden="true">sync_alt</mat-icon>
+    <h1 class="app-toolbar__title">Airtable Sync</h1>
+  </mat-toolbar> 
+  <mat-tab-group>
+    <mat-tab label="Setup">
+      <div class="tab-content">
+        <p class="app-subtitle">
+          Connect Airtable to sync your data to MongoDB.
+        </p>
+
+        <section class="setup-group">
+          <h2 class="setup-group__title">Airtable Connection</h2>
+          <p class="setup-group__intro">
+            OAuth Connection to Airtable.
+          </p>
+          <app-connection-status
+            (basesSynced)="onBasesSynced($event)"
+            (disconnected)="onDisconnected()"
+            (connectedChange)="onConnectedChange($event)"
+          />
+
+          @if (airtableConnected()) {
+            <app-sync-panel [bases]="bases()" />
+          }
+        </section>
+
+        @if (airtableConnected() || revisionAuthenticated()) {
+          <mat-divider />
+
+          <section class="setup-group">
+            <h2 class="setup-group__title">Revision History Login</h2>
+
+            <p class="setup-group__intro">
+              Browser-session based login (email/password + MFA) For Airtable's internal revision-history data.
+            </p>
+
+            <app-revision-auth
+              [initialAuthenticated]="revisionAuthenticated()"
+              (authenticatedChange)="onRevisionAuthenticated($event)"
+            />
+
+            @if (revisionAuthenticated()) {
+              <app-revision-sync [ticketCount]="ticketCount()" />
+            }
+          </section>
+        }
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Browse Data">
+      <div class="tab-content">
+        <app-data-browser />
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</main>

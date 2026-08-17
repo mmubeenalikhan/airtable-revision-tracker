@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Sync Airtable Data</mat-card-title>
+    <mat-card-subtitle>Pull data from a base into MongoDB.</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (bases.length) {
+      <mat-form-field appearance="outline" class="base-select">
+        <mat-label>Base</mat-label>
+        <mat-select [(ngModel)]="baseId">
+          @for (base of bases; track base.airtableId) {
+            <mat-option [value]="base.airtableId">{{ base.name }}</mat-option>
+          }
+        </mat-select>
+
+        <mat-hint>Select a Base</mat-hint>
+      </mat-form-field>
+
+      @if (status()) {
+        <p class="status-line">{{ status() }}</p>
+      }
+    } @else {
+      <p class="hint">Connect Airtable above to load bases.</p>
+    }
+
+  </mat-card-content>
+
+  @if (bases.length) {
+    <mat-card-actions>
+      <button mat-stroked-button (click)="syncTables()" [disabled]="busy() || !baseId">
+        <mat-icon>table_chart</mat-icon>
+        Sync Tables
+      </button>
+      <button mat-stroked-button (click)="syncTickets()" [disabled]="busy() || !baseId">
+        <mat-icon>confirmation_number</mat-icon>
+        Sync Tickets
+      </button>
+      <button mat-stroked-button (click)="syncUsers()" [disabled]="busy() || !baseId">
+        <mat-icon>people</mat-icon>
+        Sync Users
+      </button>
+      <button mat-raised-button color="primary" (click)="syncAll()" [disabled]="busy() || !baseId">
+        <mat-icon>sync</mat-icon>
+        Sync All
+      </button>
+    </mat-card-actions>
+  }
+</mat-card>

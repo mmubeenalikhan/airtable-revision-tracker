@@ -1,0 +1,25 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.control {
+  min-width: 220px;
+}
+
+.search {
+  flex: 1;
+  min-width: 280px;
+}
+
+.error {
+  color: #b3261e;
+}
+
+.grid {
+  width: 100%;
+  height: 560px;
+}
+

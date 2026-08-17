@@ -1,0 +1,16 @@
+.base-select {
+  width: 100%;
+  max-width: 320px;
+  display: block;
+}
+
+mat-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; 
+}
+
+.status-line {
+  font-family: monospace;
+  word-break: break-word;
+}

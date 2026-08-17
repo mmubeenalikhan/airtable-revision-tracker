@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Airtable Account</mat-card-title>
+    <mat-card-subtitle> Connects to your Airtable account. </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (loading()) {
+      <div class="status-row">
+        <mat-spinner diameter="18" />
+        <span>Checking connection… </span>
+      </div>
+    } @else if (connected()) {
+      <div class="status-row">
+        <mat-icon color="primary">check_circle</mat-icon>
+        <span>Connected</span>
+      </div>
+      <p class="hint">Disconnecting stops syncing until you reconnect.</p>
+    } @else {
+      <p class="hint">Not connected yet</p>
+    }
+
+    @if (callbackError()) {
+      <p class="error-line">
+        <mat-icon color="warn">error</mat-icon>
+        <span>Connection failed: {{ callbackError() }}</span>
+      </p>
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+    @if (!loading() && connected()) {
+      <button mat-stroked-button color="warn" (click)="disconnect()" [disabled]="disconnecting()">
+        <mat-icon>link_off</mat-icon>
+        Disconnect
+      </button>
+    } @else if (!loading() && !connected()) {
+      <a mat-raised-button color="primary" [href]="loginUrl">
+        <mat-icon>link</mat-icon>
+        Connect
+      </a>
+    }
+  </mat-card-actions>
+</mat-card>

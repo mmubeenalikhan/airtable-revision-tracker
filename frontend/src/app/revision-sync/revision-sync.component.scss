@@ -1,0 +1,19 @@
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat__label {
+  font-size: 0.85rem;
+  color: #666;
+}
+.stat__value {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
