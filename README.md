@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-A full-stack Airtable integration: an OAuth2/PKCE-authenticated sync engine that mirrors bases, tables, tickets, and users into MongoDB, paired with a browser-automation service that recovers per-field revision history that Airtable's public REST API doesn't expose — plus a dynamic Angular data browser (AG Grid) to explore everything that's been synced.
+A full-stack Airtable integration: an OAuth2/PKCE-authenticated sync engine that mirrors bases, tables, tickets, and users into MongoDB, paired with a browser-automation service that recovers per-field revision history that Airtable's public REST API doesn't expose, plus a dynamic Angular data browser (AG Grid) to explore everything that's been synced.
 
 ## Overview
 
@@ -27,16 +27,16 @@ Building both side by side is the point: one is "read the docs and implement the
 ## Architecture
 
 ```
-┌─────────────────────────────┐        ┌──────────────────────────────┐
-│   Angular 19 frontend        │        │        Express + TS backend           │
-│  Material · AG Grid          │◄──────►│                                        │
-└─────────────────────────────┘  REST  │  ┌────────────┐   ┌───────────────────┐ │
-                                        │  │ OAuth/API  │   │  Puppeteer +       │ │
-                                        │  │ sync path  │   │  cookie scraper    │ │
-                                        │  └─────┬──────┘   └─────────┬─────────┘ │
-                                        │        └───────────┬────────┘           │
-                                        │                    ▼                    │
-                                        │              MongoDB (Mongoose)         │
+┌─────────────────────────────┐         ┌──────────────────────────────────────────┐
+│   Angular 19 frontend       │         │        Express + TS backend              │
+│  Material · AG Grid         │◄──────► │                                          │
+└─────────────────────────────┘  REST   │  ┌────────────┐   ┌───────────────────┐  │
+                                        │  │ OAuth/API  │   │  Puppeteer +      │  │
+                                        │  │ sync path  │   │  cookie scraper   │  │
+                                        │  └─────┬──────┘   └─────────┬─────────┘  │
+                                        │        └───────────┬────────┘            │
+                                        │                    ▼                     │
+                                        │              MongoDB (Mongoose)          │
                                         └──────────────────────────────────────────┘
 ```
 
